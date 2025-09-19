@@ -31,6 +31,17 @@ export const GET_MOVIES = gql`
   }
 `;
 
+export const GET_GENRES = gql`
+  query Genres {
+    genres {
+      nodes {
+        id
+        title
+      }
+    }
+  }
+`;
+
 export const GET_MOVIE_BY_ID = gql`
   query GetMovieById($id: ID!) {
     movie(id: $id) {

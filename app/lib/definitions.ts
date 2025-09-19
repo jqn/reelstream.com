@@ -137,3 +137,9 @@ export type GetMoviesQuery = {
     pagination: PageInfo;
   };
 };
+
+export type GetGenresQuery = {
+  genres: {
+    nodes: Pick<Genre, "id" | "title">[];
+  };
+};
