@@ -2,8 +2,8 @@
 
 import { useSuspenseQuery } from "@apollo/client/react";
 import { GET_MOVIES } from "@/app/lib/queries";
-import { Card } from "@/app/ui/home/Card";
-import { GetMoviesQuery } from "@/app/lib/definitions";
+import { MovieCard } from "@/app/ui/home/moviecard";
+import { GetMoviesQuery, Genre } from "@/app/lib/definitions";
 import Search from "@/app/ui/search";
 import { lusitana } from "@/app/ui/fonts";
 import Pagination from "@/app/ui/invoices/pagination";
@@ -42,13 +42,26 @@ export default function Page() {
         <Search placeholder="Search movies..." />
         <Dropdown />
       </div>
+      <div className="mt-4">
+        <h2 className={`${lusitana.className} text-2xl`}>
+          {searchQuery
+            ? `${
+                data.movies.pagination.totalPages *
+                data.movies.pagination.perPage
+              } movies found`
+            : null}
+        </h2>
+      </div>
       <div className="mt-16 grid gap-4 sm:gap-6 md:gap-8 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-6">
         {data.movies.nodes.map((movie) => (
-          <Card
+          <MovieCard
             key={movie.id}
             title={movie.title}
             summary={movie.summary}
             src={movie.posterUrl}
+            rating={movie.rating}
+            duration={movie.duration}
+            genres={movie.genres as Genre[]}
           />
         ))}
       </div>

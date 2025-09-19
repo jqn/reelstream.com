@@ -41,24 +41,3 @@ export const GET_GENRES = gql`
     }
   }
 `;
-
-export const GET_MOVIE_BY_ID = gql`
-  query GetMovieById($id: ID!) {
-    movie(id: $id) {
-      title
-      summary
-      rating
-      ratingValue
-      posterUrl
-      mainActors
-      duration
-      genres {
-        title
-      }
-      id
-      directors
-      datePublished
-      bestRating
-    }
-  }
-`;
