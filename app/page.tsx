@@ -2,11 +2,12 @@
 
 import { useSuspenseQuery } from "@apollo/client/react";
 import { GET_MOVIES } from "@/app/lib/queries";
-import { MovieCard } from "@/app/ui/home/moviecard";
+import { MovieCard } from "@/app/ui/moviecard";
 import { GetMoviesQuery, Genre } from "@/app/lib/definitions";
 import Search from "@/app/ui/search";
 import { lusitana } from "@/app/ui/fonts";
-import Pagination from "@/app/ui/invoices/pagination";
+import Pagination from "@/app/ui/pagination";
+import { formatDuration } from "@/app/lib/utils";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { FilmIcon } from "@heroicons/react/24/solid";
@@ -60,7 +61,7 @@ export default function Page() {
             summary={movie.summary}
             src={movie.posterUrl}
             rating={movie.rating}
-            duration={movie.duration}
+            duration={formatDuration(movie.duration)}
             genres={movie.genres as Genre[]}
           />
         ))}

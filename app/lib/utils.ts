@@ -1,38 +1,30 @@
-import { Revenue } from './definitions';
+export const formatDuration = (isoDuration: string): string => {
+  if (!isoDuration) return "N/A";
 
-export const formatCurrency = (amount: number) => {
-  return (amount / 100).toLocaleString('en-US', {
-    style: 'currency',
-    currency: 'USD',
-  });
-};
+  // Parse ISO 8601 duration format (e.g., "PT1H30M" or "PT90M")
+  const match = isoDuration.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
 
-export const formatDateToLocal = (
-  dateStr: string,
-  locale: string = 'en-US',
-) => {
-  const date = new Date(dateStr);
-  const options: Intl.DateTimeFormatOptions = {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-  };
-  const formatter = new Intl.DateTimeFormat(locale, options);
-  return formatter.format(date);
-};
+  if (!match) return isoDuration;
 
-export const generateYAxis = (revenue: Revenue[]) => {
-  // Calculate what labels we need to display on the y-axis
-  // based on highest record and in 1000s
-  const yAxisLabels = [];
-  const highestRecord = Math.max(...revenue.map((month) => month.revenue));
-  const topLabel = Math.ceil(highestRecord / 1000) * 1000;
+  const hours = parseInt(match[1] || "0", 10);
+  const minutes = parseInt(match[2] || "0", 10);
+  const seconds = parseInt(match[3] || "0", 10);
 
-  for (let i = topLabel; i >= 0; i -= 1000) {
-    yAxisLabels.push(`$${i / 1000}K`);
+  const parts: string[] = [];
+
+  if (hours > 0) {
+    parts.push(`${hours}h`);
   }
 
-  return { yAxisLabels, topLabel };
+  if (minutes > 0) {
+    parts.push(`${minutes}m`);
+  }
+
+  if (seconds > 0 && hours === 0) {
+    parts.push(`${seconds}s`);
+  }
+
+  return parts.length > 0 ? parts.join(" ") : "N/A";
 };
 
 export const generatePagination = (currentPage: number, totalPages: number) => {
@@ -45,13 +37,13 @@ export const generatePagination = (currentPage: number, totalPages: number) => {
   // If the current page is among the first 3 pages,
   // show the first 3, an ellipsis, and the last 2 pages.
   if (currentPage <= 3) {
-    return [1, 2, 3, '...', totalPages - 1, totalPages];
+    return [1, 2, 3, "...", totalPages - 1, totalPages];
   }
 
   // If the current page is among the last 3 pages,
   // show the first 2, an ellipsis, and the last 3 pages.
   if (currentPage >= totalPages - 2) {
-    return [1, 2, '...', totalPages - 2, totalPages - 1, totalPages];
+    return [1, 2, "...", totalPages - 2, totalPages - 1, totalPages];
   }
 
   // If the current page is somewhere in the middle,
@@ -59,11 +51,11 @@ export const generatePagination = (currentPage: number, totalPages: number) => {
   // another ellipsis, and the last page.
   return [
     1,
-    '...',
+    "...",
     currentPage - 1,
     currentPage,
     currentPage + 1,
-    '...',
+    "...",
     totalPages,
   ];
 };
