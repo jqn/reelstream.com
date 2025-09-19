@@ -1,32 +1,49 @@
-import AcmeLogo from '@/app/ui/acme-logo';
-import { ArrowRightIcon } from '@heroicons/react/24/outline';
-import Link from 'next/link';
+"use client";
+
+import { useSuspenseQuery } from "@apollo/client/react";
+import { GET_MOVIES } from "@/app/lib/queries";
+import { Card } from "@/app/ui/home/Card";
+import { GetMoviesQuery } from "@/app/lib/definitions";
+import Search from "@/app/ui/search";
+import { lusitana } from "@/app/ui/fonts";
+import Pagination from "@/app/ui/invoices/pagination";
+import { useSearchParams } from "next/navigation";
 
 export default function Page() {
+  const searchParams = useSearchParams();
+  const currentPage = Number(searchParams.get("page")) || 1;
+  const perPage = 48; // Show 48 movies per page for grid layout
+
+  const { data } = useSuspenseQuery<GetMoviesQuery>(GET_MOVIES, {
+    variables: {
+      pagination: {
+        perPage,
+        page: currentPage,
+      },
+    },
+  });
+
   return (
-    <main className="flex min-h-screen flex-col p-6">
-      <div className="flex h-20 shrink-0 items-end rounded-lg bg-blue-500 p-4 md:h-52">
-        {/* <AcmeLogo /> */}
+    <main className="w-full p-12">
+      <div className="flex w-full items-center justify-between">
+        <h1 className={`${lusitana.className} text-2xl`}>ReelStream</h1>
       </div>
-      <div className="mt-4 flex grow flex-col gap-4 md:flex-row">
-        <div className="flex flex-col justify-center gap-6 rounded-lg bg-gray-50 px-6 py-10 md:w-2/5 md:px-20">
-          <p className={`text-xl text-gray-800 md:text-3xl md:leading-normal`}>
-            <strong>Welcome to Acme.</strong> This is the example for the{' '}
-            <a href="https://nextjs.org/learn/" className="text-blue-500">
-              Next.js Learn Course
-            </a>
-            , brought to you by Vercel.
-          </p>
-          <Link
-            href="/login"
-            className="flex items-center gap-5 self-start rounded-lg bg-blue-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-400 md:text-base"
-          >
-            <span>Log in</span> <ArrowRightIcon className="w-5 md:w-6" />
-          </Link>
-        </div>
-        <div className="flex items-center justify-center p-6 md:w-3/5 md:px-28 md:py-12">
-          {/* Add Hero Images Here */}
-        </div>
+      <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
+        <Search placeholder="Search movies..." />
+      </div>
+      <div className="mt-16 grid gap-4 sm:gap-6 md:gap-8 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-6">
+        {data.movies.nodes.map((movie) => (
+          <Card
+            key={movie.id}
+            title={movie.title}
+            summary={movie.summary}
+            type="invoices"
+            src={movie.posterUrl}
+          />
+        ))}
+      </div>
+      <div className="mt-5 flex w-full justify-center">
+        <Pagination totalPages={data.movies.pagination.totalPages} />
       </div>
     </main>
   );

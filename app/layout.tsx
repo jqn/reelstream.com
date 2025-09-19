@@ -1,3 +1,17 @@
+import "@/app/ui/global.css";
+import { ApolloWrapper } from "@/app/ApolloWrapper";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: {
+    template: "%s | ReelStream",
+    default: "ReelStream",
+  },
+  description:
+    "The official ReelStream built for easy movie rental management.",
+  metadataBase: new URL("https://reelstream.com"),
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -5,7 +19,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <ApolloWrapper>{children}</ApolloWrapper>
+      </body>
     </html>
   );
 }
