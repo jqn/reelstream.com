@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const GET_MOVIES = gql`
-  query GetMovies($pagination: PaginationInput) {
-    movies(pagination: $pagination) {
+  query GetMovies($pagination: PaginationInput, $where: MovieFilterInput) {
+    movies(pagination: $pagination, where: $where) {
       nodes {
         writers
         worstRating

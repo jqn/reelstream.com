@@ -103,6 +103,11 @@ export type PaginationInput = {
   page: number;
 };
 
+export type MovieFilterInput = {
+  search?: string | null;
+  genre?: string | null;
+};
+
 export type PageInfo = {
   totalPages: number;
   perPage: number;
