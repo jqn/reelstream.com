@@ -2,6 +2,8 @@
 
 A modern movie rental platform built with Next.js 15, featuring movie browsing, rental management, and user accounts. ReelStream integrates with the movie API to provide up-to-date information about the latest films and classics, offering users a seamless movie rental experience.
 
+Live at https://reelstream-com.vercel.app/
+
 # 🚀 Next Feature/Improvements
 
 - Highlight something in your project that you thought was especially
