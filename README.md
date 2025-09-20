@@ -1,6 +1,6 @@
 # ReelStream 🎬
 
-A modern movie rental platform built with Next.js 15, featuring movie browsing, rental management, and user accounts. ReelStream integrates with the movie API to provide up-to-date information about the latest films and classics, offering users a seamless movie rental experience.
+A modern movie discovery platform built with Next.js 15, featuring movie browsing, search, and filtering capabilities. ReelStream uses GraphQL and Apollo Client to provide a seamless movie browsing experience with real-time search and genre filtering.
 
 Live at https://reelstream-com.vercel.app/
 
@@ -84,30 +84,31 @@ User logins
 ## ✨ Features
 
 - 🎬 **Movie Catalog** - Browse extensive movie database with detailed information
-- 🔍 **Advanced Search** - Find movies by title, genre, year, or actor
-- 📋 **Rental Management** - Track active rentals, return dates, and rental history
-- 👤 **User Accounts** - Secure user registration and profile management
-- 🎭 **Movie Details** - Rich movie information including cast, plot, ratings, and trailers
-- 💳 **Rental System** - Easy movie rental with flexible rental periods
+- 🔍 **Real-time Search** - Find movies by title with instant results
+- 🎭 **Genre Filtering** - Filter movies by genre with dropdown selection
+- 🎯 **Movie Details** - Dedicated pages with cast, directors, ratings, and plot summaries
+- 📄 **Pagination** - Navigate through large movie collections efficiently
 - 📱 **Responsive Design** - Mobile-first design optimized for all devices
-- 🔐 **Authentication** - Secure login and user session management
+- ⚡ **Performance** - Optimized with Suspense boundaries and skeleton loading states
+- 🎨 **Modern UI** - Clean interface built with Tailwind CSS and Heroicons
 
 ## 🛠️ Tech Stack
 
 - **Framework**: Next.js 15 (App Router)
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
-- **Database**: PostgreSQL
-- **Authentication**: NextAuth 5.0
-- **Movie Data**: External Movie API integration
-- **Icons**: Heroicons
+- **Data Layer**: GraphQL with Apollo Client
+- **Authentication**: Token-based authentication with Apollo auth links
+- **UI Components**: Custom components with Heroicons
+- **State Management**: Apollo Client cache and React hooks
+- **Performance**: Suspense boundaries and useSuspenseQuery
 - **Package Manager**: pnpm
 
 ## 📋 Prerequisites
 
 - Node.js 18.0 or later
 - pnpm (recommended) or npm
-- PostgreSQL database
+- Access to a GraphQL movie API endpoint
 
 ## 🚀 Quick Start
 
@@ -130,33 +131,21 @@ cp .env.example .env.local
 Edit `.env.local` with your configuration:
 
 ```env
-# Database Configuration
-POSTGRES_URL="your-postgres-connection-string"
-POSTGRES_PRISMA_URL="your-postgres-prisma-url"
-POSTGRES_URL_NON_POOLING="your-non-pooling-postgres-url"
-POSTGRES_USER="your-username"
-POSTGRES_HOST="your-host"
-POSTGRES_PASSWORD="your-password"
-POSTGRES_DATABASE="your-database-name"
+# GraphQL API Configuration
+NEXT_PUBLIC_BASE_URL="your-graphql-api-base-url"
 
-# Authentication
-AUTH_SECRET="your-auth-secret"  # Generate with: openssl rand -base64 32
-AUTH_URL="http://localhost:3000/api/auth"
-
-# Movie API Configuration
-MOVIE_API_KEY="your-movie-api-key"
-MOVIE_API_BASE_URL="https://api.themoviedb.org/3"  # Example for TMDB
+# Authentication (if using token-based auth)
+# Add any authentication tokens or API keys required by your GraphQL endpoint
 ```
 
-### 3. Database Setup
+### 3. GraphQL API Setup
 
-Set up your PostgreSQL database to store user accounts, rental history, and movie favorites. The database will store user data while movie information is fetched from the external API.
+Configure your GraphQL endpoint URL in the environment variables. The application expects a GraphQL API that supports:
+- `movies` query with pagination and filtering
+- `movie` query for individual movie details
+- `genres` query for genre filtering
 
-### 4. Movie API Setup
-
-Obtain an API key from your chosen movie database provider (e.g., TMDB, OMDB) and add it to your environment variables.
-
-### 5. Run the Application
+### 4. Run the Application
 
 ```bash
 # Development server with Turbopack
@@ -174,19 +163,30 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ```
 app/
 ├── lib/                    # Core utilities and data layer
-│   ├── definitions.ts      # TypeScript type definitions
-│   ├── data.ts            # Database queries and API calls
-│   ├── movie-api.ts       # Movie API integration
-│   ├── utils.ts           # Helper functions
-│   └── placeholder-data.ts # Sample data
+│   ├── definitions.ts      # TypeScript type definitions for GraphQL
+│   ├── queries/           # GraphQL queries and mutations
+│   │   ├── index.ts       # Query exports
+│   │   └── movies.ts      # Movie-related queries
+│   ├── auth/              # Authentication utilities
+│   │   └── token-service.ts # Token management
+│   └── utils.ts           # Helper functions (pagination, formatting)
 ├── ui/                     # Reusable UI components
-│   ├── movies/            # Movie browsing and details
-│   ├── rentals/           # Rental management components
-│   ├── dashboard/         # User dashboard components
-│   └── auth/              # Authentication components
-├── seed/                   # Database seeding
-├── layout.tsx             # Root layout
-└── page.tsx               # Home page
+│   ├── movies/            # Movie components
+│   │   ├── moviecard.tsx  # Movie card component
+│   │   ├── moviegrid.tsx  # Movie grid with pagination
+│   │   └── moviedetail.tsx # Movie detail page
+│   ├── header.tsx         # Navigation header
+│   ├── search.tsx         # Search input component
+│   ├── dropdown.tsx       # Genre filter dropdown
+│   ├── pagination.tsx     # Pagination controls
+│   └── skeletons.tsx      # Loading state components
+├── movie/[id]/            # Dynamic movie detail routes
+│   └── page.tsx           # Movie detail page
+├── ApolloWrapper.tsx       # Apollo Client provider
+├── layout.tsx             # Root layout with Apollo
+├── page.tsx               # Home page
+├── error.tsx              # Global error boundary
+└── not-found.tsx          # 404 page
 ```
 
 ## 🔧 Available Scripts
@@ -201,22 +201,21 @@ This application is optimized for deployment on Vercel:
 
 1. Push your code to GitHub
 2. Connect your repository to Vercel
-3. Configure environment variables in Vercel dashboard (including movie API keys)
+3. Configure environment variables in Vercel dashboard (including GraphQL endpoint URL)
 4. Deploy automatically on every push
 
 For other platforms, ensure you have:
 - Node.js 18+ runtime
-- PostgreSQL database access
-- Movie API access and valid API keys
+- Access to a GraphQL movie API endpoint
 - Environment variables configured
 
 ## 📚 Learning Resources
 
 - [Next.js Documentation](https://nextjs.org/docs)
+- [Apollo Client Documentation](https://www.apollographql.com/docs/react/)
+- [GraphQL Documentation](https://graphql.org/learn/)
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
-- [NextAuth Documentation](https://next-auth.js.org/)
-- [The Movie Database API](https://www.themoviedb.org/documentation/api) - Popular movie API
-- [PostgreSQL Documentation](https://www.postgresql.org/docs/)
+- [TypeScript Documentation](https://www.typescriptlang.org/docs/)
 
 ## 🤝 Contributing
 
@@ -228,4 +227,4 @@ For other platforms, ensure you have:
 
 ## 📄 License
 
-This project is a movie rental platform built with modern web technologies.
+This project is a movie discovery platform built with modern web technologies.
