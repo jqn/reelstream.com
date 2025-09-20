@@ -3,7 +3,13 @@
 import Link from "next/link";
 import Header from "@/app/ui/header";
 
-export default function Error() {
+export default function Error({
+  error,
+  reset,
+}: {
+  error: Error;
+  reset: () => void;
+}) {
   return (
     <main className="w-full min-h-screen flex flex-col">
       <Header />
@@ -13,11 +19,12 @@ export default function Error() {
           <h1 className="text-9xl font-bold text-gray-200">404</h1>
 
           <p className="text-lg text-gray-600 mb-8 max-w-md">
-            Uh oh! We couldn't find the requested movie.
+            Uh oh! We couldn't find the requested page.
           </p>
 
           <Link
             href="/"
+            onClick={() => reset()}
             className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors"
           >
             Go Back
