@@ -1,3 +1,5 @@
+"use client";
+
 import { useSuspenseQuery } from "@apollo/client/react";
 import { GET_MOVIES } from "@/app/lib/queries";
 import { GetMoviesQuery } from "@/app/lib/definitions";

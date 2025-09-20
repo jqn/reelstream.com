@@ -32,7 +32,9 @@ export default function Header({ showSearchAndFilters = false }: HeaderProps) {
       {/* Search and Filters */}
       {showSearchAndFilters && (
         <div className="flex items-center justify-between gap-2 mt-8">
-          <Search placeholder="Search movies..." />
+          <Suspense>
+            <Search placeholder="Search movies..." />
+          </Suspense>
           <Suspense>
             <Dropdown />
           </Suspense>
