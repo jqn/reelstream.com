@@ -4,7 +4,7 @@ import { GetMoviesQuery } from "@/app/lib/definitions";
 import { useSearchParams } from "next/navigation";
 import { lusitana } from "@/app/ui/fonts";
 import { calculateMovieCount } from "@/app/lib/utils";
-import { MovieCard } from "@/app/ui/moviecard";
+import { MovieCard } from "@/app/ui/movies/moviecard";
 import Pagination from "@/app/ui/pagination";
 import { formatDuration } from "@/app/lib/utils";
 import { Genre } from "@/app/lib/definitions";

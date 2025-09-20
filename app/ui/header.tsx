@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { FilmIcon, ArrowLeftIcon } from "@heroicons/react/24/solid";
+import { FilmIcon } from "@heroicons/react/24/solid";
 import { lusitana } from "@/app/ui/fonts";
 import Search from "@/app/ui/search";
 import Dropdown from "@/app/ui/dropdown";
@@ -30,7 +30,7 @@ export default function Header({ showSearchAndFilters = false }: HeaderProps) {
 
       {/* Search and Filters */}
       {showSearchAndFilters && (
-        <div className="flex items-center justify-between gap-2 md:mt-8">
+        <div className="flex items-center justify-between gap-2 mt-8">
           <Search placeholder="Search movies..." />
           <Dropdown />
         </div>

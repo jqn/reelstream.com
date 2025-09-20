@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import Header from "@/app/ui/header";
 import { MovieDetailSkeleton } from "@/app/ui/skeletons";
-import MovieDetail from "@/app/ui/moviedetail";
+import MovieDetail from "@/app/ui/movies/moviedetail";
 
 export default function MovieDetailPage() {
   return (

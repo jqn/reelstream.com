@@ -35,7 +35,7 @@ export function MovieCardSkeleton() {
 
 export function MoviesGridSkeleton({ length }: MoviesGridSkeletonProps) {
   return (
-    <div className="grid gap-4 sm:gap-6 md:gap-8 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-6">
+    <div className="grid sm:gap-6 md:gap-2 xl:gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 xxl:grid-cols-13">
       {Array.from({ length: length }, (_, i) => (
         <MovieCardSkeleton key={i} />
       ))}
