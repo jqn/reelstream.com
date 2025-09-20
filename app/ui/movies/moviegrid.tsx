@@ -8,6 +8,7 @@ import { MovieCard } from "@/app/ui/movies/moviecard";
 import Pagination from "@/app/ui/pagination";
 import { formatDuration } from "@/app/lib/utils";
 import { Genre } from "@/app/lib/definitions";
+import { Suspense } from "react";
 
 export default function MovieGrid() {
   const searchParams = useSearchParams();
@@ -57,7 +58,9 @@ export default function MovieGrid() {
         ))}
       </div>
       <div className="mt-5 flex w-full justify-center">
-        <Pagination totalPages={data.movies.pagination.totalPages} />
+        <Suspense>
+          <Pagination totalPages={data.movies.pagination.totalPages} />
+        </Suspense>
       </div>
     </div>
   );

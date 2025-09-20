@@ -5,6 +5,7 @@ import { FilmIcon } from "@heroicons/react/24/solid";
 import { lusitana } from "@/app/ui/fonts";
 import Search from "@/app/ui/search";
 import Dropdown from "@/app/ui/dropdown";
+import { Suspense } from "react";
 
 interface HeaderProps {
   showSearchAndFilters?: boolean;
@@ -32,7 +33,9 @@ export default function Header({ showSearchAndFilters = false }: HeaderProps) {
       {showSearchAndFilters && (
         <div className="flex items-center justify-between gap-2 mt-8">
           <Search placeholder="Search movies..." />
-          <Dropdown />
+          <Suspense>
+            <Dropdown />
+          </Suspense>
         </div>
       )}
     </div>
