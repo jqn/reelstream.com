@@ -52,6 +52,10 @@ export type GetMoviesQuery = {
   };
 };
 
+export type GetMovieQuery = {
+  movie: Movie;
+};
+
 export type GetGenresQuery = {
   genres: {
     nodes: Pick<Genre, "id" | "title">[];

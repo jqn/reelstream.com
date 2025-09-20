@@ -31,6 +31,30 @@ export const GET_MOVIES = gql`
   }
 `;
 
+export const GET_MOVIE = gql`
+  query GetMovie($id: ID!) {
+    movie(id: $id) {
+      id
+      title
+      posterUrl
+      summary
+      duration
+      directors
+      mainActors
+      writers
+      genres {
+        id
+        title
+      }
+      datePublished
+      rating
+      ratingValue
+      bestRating
+      worstRating
+    }
+  }
+`;
+
 export const GET_GENRES = gql`
   query Genres {
     genres {

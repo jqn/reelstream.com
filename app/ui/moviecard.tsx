@@ -2,8 +2,10 @@
 import Image from "next/image";
 import { Genre } from "@/app/lib/definitions";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export function MovieCard({
+  id,
   title,
   summary,
   src,
@@ -11,6 +13,7 @@ export function MovieCard({
   rating,
   duration,
 }: {
+  id: string;
   title: string;
   src: string;
   summary: string;
@@ -20,6 +23,7 @@ export function MovieCard({
 }) {
   const [imageError, setImageError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
 
   const handleImageError = () => {
     setImageError(true);
@@ -29,8 +33,16 @@ export function MovieCard({
   const handleImageLoad = () => {
     setIsLoading(false);
   };
+
+  const handleCardClick = () => {
+    router.push(`/movie/${id}`);
+  };
+
   return (
-    <div className="group relative overflow-hidden rounded-lg border bg-background transition-all hover:shadow-lg aspect-3/2">
+    <div
+      onClick={handleCardClick}
+      className="group relative overflow-hidden rounded-lg border bg-background transition-all hover:shadow-lg aspect-3/2 cursor-pointer"
+    >
       <div className="h-96 w-full overflow-hidden">
         <div className="relative h-full w-full transition-all group-hover:scale-105">
           {imageError ? (
