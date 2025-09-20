@@ -2,7 +2,6 @@
 import Image from "next/image";
 import { Genre } from "@/app/lib/definitions";
 import { useState } from "react";
-import { FilmIcon } from "@heroicons/react/24/outline";
 
 export function MovieCard({
   title,

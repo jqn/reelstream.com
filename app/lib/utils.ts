@@ -27,6 +27,17 @@ export const formatDuration = (isoDuration: string): string => {
   return parts.length > 0 ? parts.join(" ") : "N/A";
 };
 
+export const calculateMovieCount = (
+  totalPages: number,
+  perPage: number,
+  currentPageItemCount: number
+): number => {
+  if (totalPages === 1) {
+    return currentPageItemCount;
+  }
+  return totalPages * perPage;
+};
+
 export const generatePagination = (currentPage: number, totalPages: number) => {
   // If the total number of pages is 7 or less,
   // display all pages without any ellipsis.

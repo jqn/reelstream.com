@@ -7,18 +7,22 @@ import { GetMoviesQuery, Genre } from "@/app/lib/definitions";
 import Search from "@/app/ui/search";
 import { lusitana } from "@/app/ui/fonts";
 import Pagination from "@/app/ui/pagination";
-import { formatDuration } from "@/app/lib/utils";
-import { useSearchParams } from "next/navigation";
-import Link from "next/link";
+import { formatDuration, calculateMovieCount } from "@/app/lib/utils";
+import { useSearchParams, useRouter } from "next/navigation";
 import { FilmIcon } from "@heroicons/react/24/solid";
 import Dropdown from "./ui/dropdown";
 
 export default function Page() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const currentPage = Number(searchParams.get("page")) || 1;
   const searchQuery = searchParams.get("query") || null;
   const genreFilter = searchParams.get("genre") || null;
   const perPage = 48; // Show 48 movies per page for grid layout
+
+  const handleLogoClick = () => {
+    router.push('/');
+  };
 
   const { data } = useSuspenseQuery<GetMoviesQuery>(GET_MOVIES, {
     variables: {
@@ -35,10 +39,13 @@ export default function Page() {
 
   return (
     <main className="w-full p-12">
-      <Link href="/" className="flex w-fit items-center justify-between">
+      <button
+        onClick={handleLogoClick}
+        className="flex w-fit items-center justify-between hover:opacity-80 transition-opacity cursor-pointer"
+      >
         <FilmIcon className="h-8 md:mr-2" />
         <h1 className={`${lusitana.className} text-2xl`}>ReelStream</h1>
-      </Link>
+      </button>
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
         <Search placeholder="Search movies..." />
         <Dropdown />
@@ -46,10 +53,11 @@ export default function Page() {
       <div className="mt-4">
         <h2 className={`${lusitana.className} text-2xl`}>
           {searchQuery
-            ? `${
-                data.movies.pagination.totalPages *
-                data.movies.pagination.perPage
-              } movies found`
+            ? `${calculateMovieCount(
+                data.movies.pagination.totalPages,
+                data.movies.pagination.perPage,
+                data.movies.nodes.length
+              )} movies found`
             : null}
         </h2>
       </div>
