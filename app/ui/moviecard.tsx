@@ -4,6 +4,16 @@ import { Genre } from "@/app/lib/definitions";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+interface MovieCardProps {
+  id: string;
+  title: string;
+  src: string;
+  summary: string;
+  rating: string;
+  duration: string;
+  genres: Genre[];
+}
+
 export function MovieCard({
   id,
   title,
@@ -12,15 +22,7 @@ export function MovieCard({
   genres,
   rating,
   duration,
-}: {
-  id: string;
-  title: string;
-  src: string;
-  summary: string;
-  rating: string;
-  duration: string;
-  genres: Genre[];
-}) {
+}: MovieCardProps) {
   const [imageError, setImageError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();

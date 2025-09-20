@@ -42,7 +42,7 @@ export default function MovieGrid() {
             : ""}
         </h2>
       </div>
-      <div className="grid gap-4 sm:gap-6 md:gap-8 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-6">
+      <div className="grid sm:gap-6 md:gap-2 xl:gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 xxl:grid-cols-13">
         {data.movies.nodes.map((movie) => (
           <MovieCard
             key={movie.id}

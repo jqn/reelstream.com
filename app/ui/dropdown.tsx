@@ -14,7 +14,6 @@ export default function GenreDropdown() {
   const selectedGenre = searchParams.get("genre");
 
   const { data } = useSuspenseQuery<GetGenresQuery>(GET_GENRES);
-  console.log("🚀 ~ GenreDropdown ~ data:", data);
 
   const handleGenreSelect = (genreId: string | null) => {
     const params = new URLSearchParams(searchParams);
