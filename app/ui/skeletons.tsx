@@ -62,7 +62,7 @@ export function MoviesSkeleton() {
 
 export function MovieDetailSkeleton() {
   return (
-    <div className="min-h-screen bg-gray-50 pt-14">
+    <div className={`min-h-screen bg-gray-50 pt-14 ${shimmer}`}>
       {/* Hero Section Skeleton */}
       <div className="relative h-96 bg-gray-200 animate-pulse">
         <div className="flex h-full items-center px-12">
