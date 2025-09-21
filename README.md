@@ -1,41 +1,35 @@
 # ReelStream 🎬
 
-A modern movie discovery platform built with Next.js 15, featuring movie browsing, search, and filtering capabilities. ReelStream uses GraphQL and Apollo Client to provide a seamless movie browsing experience with real-time search and genre filtering.
+A modern movie discovery platform built with Next.js 15, featuring movie browsing, search, and filtering capabilities. ReelStream uses GraphQL and Apollo Client to provide a consistent movie browsing experience with search and genre filtering.
 
 Live at https://reelstream-com.vercel.app/
 
-# 🚀 Next Feature/Improvements
+# 🚀 Next Features/Improvements
 
 - Highlight something in your project that you thought was especially
 interesting or significant to your overall implementation
-
-  The intelligent movie count calculation with the calculateMovieCount
-  utility function. It demonstrates thoughtful UX design
   
-  - User-centric thinking: Instead of just showing "48 movies found" for a
-  search that returns 12 results, it shows the actual count
-  - Handles real-world pagination: Recognizes that the last page often has
-  fewer items
-  - Progressive enhancement: Provides exact data when possible, reasonable
-  estimates when not
-
-  - Reusable architecture: Clean utility function that can be used anywhere
+  The error handling and search result count implementation are especially
+  interesting. The search result count addresses API limitations where
+  there's no total movie count property. I created a utility function that
+  returns accurate counts when possible and reasonable estimates when not.
+  Additionally, handling broken image URLs with placeholder images maintains
+  UI consistency across all states.
 
 - Tell us what you are most pleased or proud of with your implementation.
-  The comprehensive error handling and state management in the MovieCard
-  component.
-  
-  - Resilient UX: Users never see broken images or empty spaces
-  - Performance conscious: Proper loading states prevent layout shifts
-  - Accessible: Clear fallback states with meaningful feedback
-  - Production-ready: Handles real-world scenarios like slow networks, broken
-   URLs, 404s
-  - Clean implementation: Uses React best practices with proper state
-  management
+
+  I'm most proud of the MovieCard error handling for broken images, slow
+  networks, and loading states. Instead of blank screens, users always get
+  useful feedback. Combined with Next.js, TypeScript, Tailwind, and GraphQL,
+  the project feels production-ready rather than just a demo. I'm also proud
+  of maintaining best practices through separation of concerns—breaking
+  larger components into smaller, logical pieces and maintaining separate API
+   and UI layers for better scalability and maintainability.
 
 - Given more time, what next feature or improvement would you like to add
 to your project?
-  - Advanced search with filters and a dedicated movie detail page.
+
+  - Advanced search with filters.
     Implementation would include:
 
   1. Enhanced Search Interface:
@@ -45,46 +39,61 @@ to your project?
   - Year range slider (1990-2024)
   - Rating filter (7+ stars, etc.)
   - Duration filter (< 90min, 90-120min, 2+ hours)
-  - Sort options (newest, rating, alphabetical)
-  - Search result count
+  - Sort options (newest, rating, alphabetical / requires API changes to accept a sort argument) 
+  - Accurate search result count (requires API changes to return a count property)
+  - Autosuggestions
   
   2. Movie Detail Pages:
   // Route: /movie/[id]
   
-  - Full cast and crew information
   - Trailer integration (YouTube API)
   - User reviews and ratings
   - "More like this" recommendations
   - Watchlist functionality
+  - Favorites functionality
   
   3. URL State Management:
   // Advanced URL params for sharing filtered results
   // ?search=action&year=2020-2024&rating=8&sort=newest
 
+  4. User accounts
+  - Authentication
+  - Watchlist - save for later movies
+  - Recommendations based on favorites
+  - Profiles with preferences (favorites, genres, etc)
+
+  5. Movie grid image optimizations
+
+  - Image blurring feature
+  - Prefetching images at build time with getStaticProps
+  - Use of a service (Cloudinary) to fetch the same images at different sizes based on display needs per page
+
+  6. Add accessibility
+
+  - Better keyboard navigation 
+  - ARIA labels
+  - Handle screen reader friendliness
+
+  7. Add testing and monitoring
+
+  - Add unit tests and end to end tests
+  - Add error logging/monitoring in production
+
    Why this would be valuable:
   - Discovery: Users can find exactly what they're looking for
   - Engagement: Detail pages increase time on site
-  - Shareability: Rich URLs allow sharing specific searchess
+  - Shareability: Rich URLs allow sharing specific searches
   - Scalability: Prepares for features like user accounts, watchlists,
   reviews
 
-  Technical benefits:
-  - Leverages existing GraphQL infrastructure
-  - Builds on current search/filter patterns
-  - Uses established component architecture
-  - Maintains performance with proper pagination
-
   This would transform ReelStream from a browsing experience into a
-  comprehensive movie discovery platform.
-
-Improve SEO
-User logins
+  complete movie discovery platform.
 
 
 ## ✨ Features
 
 - 🎬 **Movie Catalog** - Browse extensive movie database with detailed information
-- 🔍 **Real-time Search** - Find movies by title with instant results
+- 🔍 **Movie Search** - Find movies by title with instant results
 - 🎭 **Genre Filtering** - Filter movies by genre with dropdown selection
 - 🎯 **Movie Details** - Dedicated pages with cast, directors, ratings, and plot summaries
 - 📄 **Pagination** - Navigate through large movie collections efficiently
@@ -202,7 +211,7 @@ This application is optimized for deployment on Vercel:
 1. Push your code to GitHub
 2. Connect your repository to Vercel
 3. Configure environment variables in Vercel dashboard (including GraphQL endpoint URL)
-4. Deploy automatically on every push
+4. Deploy automatically on every push to tne main branch
 
 For other platforms, ensure you have:
 - Node.js 18+ runtime
@@ -227,4 +236,4 @@ For other platforms, ensure you have:
 
 ## 📄 License
 
-This project is a movie discovery platform built with modern web technologies.
+This project is a movie discovery platform built on top of modern web technologies.

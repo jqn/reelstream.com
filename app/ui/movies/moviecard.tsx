@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Genre } from "@/app/lib/definitions";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { removeDoubleQuotes } from "@/app/lib/utils";
 
 interface MovieCardProps {
   id: string;
@@ -79,7 +80,9 @@ export function MovieCard({
       </div>
       <div className="absolute bottom-0 bg-white h-[150px]">
         <div className="flex px-2 py-2 text-left">
-          <h3 className="text-lg font-medium line-clamp-1">{title}</h3>
+          <h3 className="text-lg font-medium line-clamp-1">
+            {removeDoubleQuotes(title)}
+          </h3>
         </div>
         <p className={"px-2 line-clamp-2 text-sm"}>{summary}</p>
         <div className="px-2 py-2 text-left">

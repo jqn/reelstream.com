@@ -12,7 +12,7 @@ import {
   StarIcon,
 } from "@heroicons/react/24/solid";
 import { lusitana } from "@/app/ui/fonts";
-import { formatDuration } from "@/app/lib/utils";
+import { formatDuration, removeDoubleQuotes } from "@/app/lib/utils";
 
 export default function MovieDetail() {
   const params = useParams();
@@ -50,7 +50,7 @@ export default function MovieDetail() {
               <div className="relative h-80 w-60 overflow-hidden rounded-lg shadow-lg">
                 <Image
                   src={movie.posterUrl || "/placeholder.png"}
-                  alt={`${movie.title} poster`}
+                  alt={`${removeDoubleQuotes(movie.title)} poster`}
                   fill
                   className="object-cover"
                   priority
@@ -61,7 +61,7 @@ export default function MovieDetail() {
             {/* Movie Info */}
             <div className="flex-1 text-white">
               <h1 className={`${lusitana.className} text-4xl font-bold mb-4`}>
-                {movie.title}
+                {removeDoubleQuotes(movie.title)}
               </h1>
 
               <div className="flex items-center space-x-6 mb-4 text-sm">
